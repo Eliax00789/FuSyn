@@ -1,21 +1,21 @@
 package yeet.eliax00789.fusyn.parser;
 
-import yeet.eliax00789.fusyn.parser.type.StringContainer;
-import yeet.eliax00789.fusyn.parser.type.TypedListContainer;
-import yeet.eliax00789.fusyn.parser.type.UnionType;
+import yeet.eliax00789.fusyn.parser.type.StringASTNode;
+import yeet.eliax00789.fusyn.parser.type.TypedListASTNode;
+import yeet.eliax00789.fusyn.parser.type.ASTNode;
 
-public class DebugUnionTypeVisitor implements UnionType.Visitor<String> {
+public class DebugASTNodeVisitor implements ASTNode.Visitor<String> {
     @Override
-    public String visit(StringContainer stringContainer) {
-        return stringContainer.value();
+    public String visit(StringASTNode stringASTNode) {
+        return stringASTNode.value();
     }
 
     @Override
-    public String visit(TypedListContainer typedListContainer) {
+    public String visit(TypedListASTNode typedListASTNode) {
         Character start;
         Character end;
         //noinspection EnhancedSwitchMigration
-        switch (typedListContainer.type()) {
+        switch (typedListASTNode.type()) {
             case null:
                 start = null;
                 end = null;
@@ -33,7 +33,7 @@ public class DebugUnionTypeVisitor implements UnionType.Visitor<String> {
                 end = ']';
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + typedListContainer.type());
+                throw new IllegalStateException();
         }
 
         StringBuilder sb = new StringBuilder();
@@ -41,7 +41,7 @@ public class DebugUnionTypeVisitor implements UnionType.Visitor<String> {
             sb.append(start);
         }
         boolean isFirst = true;
-        for (UnionType value : typedListContainer.value()) {
+        for (ASTNode value : typedListASTNode.value()) {
             if (isFirst) {
                 isFirst = false;
             } else {

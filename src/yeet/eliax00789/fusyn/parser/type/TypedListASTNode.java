@@ -6,7 +6,7 @@ import yeet.eliax00789.fusyn.parser.TokenType;
 
 import java.util.List;
 
-public record TypedListContainer(@NotNull List<UnionType> value, @Nullable TokenType type) implements UnionType {
+public record TypedListASTNode(int position, @NotNull List<ASTNode> value, @Nullable TokenType type) implements ASTNode {
     @Override
     public <R> R accept(Visitor<R> visitor) {
         return visitor.visit(this);

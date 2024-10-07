@@ -3,9 +3,9 @@ package yeet.eliax00789.fusyn.parser;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import yeet.eliax00789.fusyn.error.ErrorReporter;
-import yeet.eliax00789.fusyn.parser.type.StringContainer;
-import yeet.eliax00789.fusyn.parser.type.TypedListContainer;
-import yeet.eliax00789.fusyn.parser.type.UnionType;
+import yeet.eliax00789.fusyn.parser.type.StringASTNode;
+import yeet.eliax00789.fusyn.parser.type.TypedListASTNode;
+import yeet.eliax00789.fusyn.parser.type.ASTNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +20,13 @@ public class Parser {
     }
 
     @Nullable
-    public TypedListContainer parse() {
-        return this.parseList(null);
+    public TypedListASTNode parse() {
+        return this.parseList(0, null);
     }
 
     @Nullable
-    private TypedListContainer parseList(@Nullable TokenType type) {
-        List<UnionType> list = new ArrayList<>();
+    private TypedListASTNode parseList(int position, @Nullable TokenType type) {
+        List<ASTNode> list = new ArrayList<>();
         while_list:
         while (true) {
             Token token = this.tokenizer.next();
@@ -41,7 +41,7 @@ public class Parser {
                 case LEFT_PARENTHESIS:
                 case LEFT_BRACE:
                 case LEFT_BRACKET: {
-                    TypedListContainer childList = this.parseList(token.type());
+                    TypedListASTNode childList = this.parseList(token.position(), token.type());
                     if (childList == null) {
                         return null;
                     }
@@ -49,7 +49,7 @@ public class Parser {
                     break;
                 }
                 case STRING:
-                    list.add(new StringContainer(token.value()));
+                    list.add(new StringASTNode(token.position(), token.value()));
                     break;
                 case RIGHT_PARENTHESIS:
                     if (type == TokenType.LEFT_PARENTHESIS) {
@@ -70,6 +70,6 @@ public class Parser {
                     return null;
             }
         }
-        return new TypedListContainer(list, type);
+        return new TypedListASTNode(position, list, type);
     }
 }
