@@ -23,6 +23,7 @@ public class DefFuncFunction implements Function {
     public Object execute(Interpreter interpreter, @NotNull List<Object> arguments, int position) {
         String name = (String) arguments.getFirst();
         TypedListASTNode body = (TypedListASTNode) arguments.get(1);
-        return interpreter.interpreterContext().functions.add(new CodeFunction(name, body));
+        interpreter.interpreterContext().addFunction(new CodeFunction(name, body));
+        return null;
     }
 }

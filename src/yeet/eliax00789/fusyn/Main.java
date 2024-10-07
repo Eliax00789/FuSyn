@@ -77,8 +77,8 @@ public class Main {
 
     private static InterpreterContext initInterpreterContext() {
         InterpreterContext interpreterContext = new InterpreterContext();
-        interpreterContext.functions.add(new DebugFunction());
-        interpreterContext.functions.add(new DefFuncFunction());
+        interpreterContext.addFunction(new DebugFunction());
+        interpreterContext.addFunction(new DefFuncFunction());
         return interpreterContext;
     }
 }

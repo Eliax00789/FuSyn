@@ -8,6 +8,7 @@ import yeet.eliax00789.fusyn.parser.type.TypedListASTNode;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public record Interpreter(ErrorReporter errorReporter, InterpreterContext interpreterContext) implements ASTNode.Visitor<Object> {
     public static class InterpreterException extends RuntimeException {
@@ -29,37 +30,36 @@ public record Interpreter(ErrorReporter errorReporter, InterpreterContext interp
             case LEFT_PARENTHESIS: {
                 List<ASTNode> typedListASTNodeValue = typedListASTNode.value();
                 Object firstValue = typedListASTNodeValue.getFirst().accept(this);
-                if (firstValue instanceof String) {
-                    for (Function function : interpreterContext.functions) {
-                        if (function.getName().equals(firstValue)) {
-                            List<Class<?>> argumentTypes = function.getArgumentTypes();
-                            if (argumentTypes.size() != typedListASTNodeValue.size() - 1) {
-                                this.errorReporter.error(typedListASTNode.position(), "Invalid number of arguments");
-                                throw new InterpreterException();
-                            }
-                            List<Object> arguments = new ArrayList<>();
-                            for (int i = 1; i < typedListASTNodeValue.size(); i++) {
-                                Class<?> argumentType = argumentTypes.get(i - 1);
-                                Object argument = typedListASTNodeValue.get(i).accept(this);
-                                if (!argumentType.isInstance(argument)) {
-                                    int position = switch (typedListASTNodeValue.get(i)) {
-                                        case StringASTNode s -> s.position();
-                                        case TypedListASTNode t -> t.position();
-                                        default -> throw new IllegalStateException("Unexpected");
-                                    };
-                                    this.errorReporter.error(position, "Invalid argument type " + argument.getClass().getSimpleName() + " expected " + argumentType.getSimpleName());
-                                    throw new InterpreterException();
-                                }
-                                arguments.add(argument);
-                            }
-                            return function.execute(this, arguments, typedListASTNode.position());
-                        }
-                    }
-                    this.errorReporter.error(typedListASTNode.position(), "Exec function not found");
-                } else {
+                if (!(firstValue instanceof String firstValueStr)) {
                     this.errorReporter.error(typedListASTNode.position(), "Exec invalid");
+                    throw new InterpreterException();
                 }
-                throw new InterpreterException();
+                Function function = this.interpreterContext.getFunction(firstValueStr);
+                if (function == null) {
+                    this.errorReporter.error(typedListASTNode.position(), "Exec function not found");
+                    throw new InterpreterException();
+                }
+                List<Class<?>> argumentTypes = function.getArgumentTypes();
+                if (argumentTypes.size() != typedListASTNodeValue.size() - 1) {
+                    this.errorReporter.error(typedListASTNode.position(), "Invalid number of arguments");
+                    throw new InterpreterException();
+                }
+                List<Object> arguments = new ArrayList<>();
+                for (int i = 1; i < typedListASTNodeValue.size(); i++) {
+                    Class<?> argumentType = argumentTypes.get(i - 1);
+                    Object argument = typedListASTNodeValue.get(i).accept(this);
+                    if (!argumentType.isInstance(argument)) {
+                        int position = switch (typedListASTNodeValue.get(i)) {
+                            case StringASTNode s -> s.position();
+                            case TypedListASTNode t -> t.position();
+                            default -> throw new IllegalStateException("Unexpected");
+                        };
+                        this.errorReporter.error(position, "Invalid argument type " + argument.getClass().getSimpleName() + " expected " + argumentType.getSimpleName());
+                        throw new InterpreterException();
+                    }
+                    arguments.add(argument);
+                }
+                return function.execute(this, arguments, typedListASTNode.position());
             }
             case LEFT_BRACE: {
                 return typedListASTNode;
