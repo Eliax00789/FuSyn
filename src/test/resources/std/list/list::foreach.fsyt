@@ -1,5 +1,5 @@
 ------------------------------
-(cf::foreach [a b c d] letter {
+(list::foreach [a b c d] letter {
     (debug <letter>)
 })
 ------------------------------
