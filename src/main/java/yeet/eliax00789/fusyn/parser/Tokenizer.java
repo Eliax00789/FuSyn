@@ -29,6 +29,8 @@ public class Tokenizer {
             case '}' -> new Token(TokenType.RIGHT_BRACE, null, this.start);
             case '[' -> new Token(TokenType.LEFT_BRACKET, null, this.start);
             case ']' -> new Token(TokenType.RIGHT_BRACKET, null, this.start);
+            case '<' -> new Token(TokenType.LEFT_ANGLE_BRACKET, null, this.start);
+            case '>' -> new Token(TokenType.RIGHT_ANGLE_BRACKET, null, this.start);
             default -> this.handleString(startChar);
         };
     }
@@ -57,7 +59,12 @@ public class Tokenizer {
                     case '\\':
                         isEscaped = true;
                         continue;
-                    case ' ', '\r', '\n', '\t', '(', ')', '{', '}', '[', ']':
+                    case ' ',
+                         '\r', '\n', '\t',
+                         '(', ')',
+                         '{', '}',
+                         '[', ']',
+                         '<', '>':
                         this.current--;
                         break str_loop;
                 }

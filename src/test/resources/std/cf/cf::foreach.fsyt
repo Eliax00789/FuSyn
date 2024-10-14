@@ -1,6 +1,6 @@
 ------------------------------
 (cf::foreach [a b c d] letter {
-    (debug (var::get letter))
+    (debug <letter>)
 })
 ------------------------------
 a

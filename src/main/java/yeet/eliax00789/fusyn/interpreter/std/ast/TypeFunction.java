@@ -25,6 +25,7 @@ public class TypeFunction implements Function {
             case LEFT_PARENTHESIS -> "(";
             case LEFT_BRACE -> "{";
             case LEFT_BRACKET -> "[";
+            case LEFT_ANGLE_BRACKET -> '<';
             case null, default -> throw new IllegalStateException("Unexpected");
         };
     }

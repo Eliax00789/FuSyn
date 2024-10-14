@@ -40,7 +40,8 @@ public class Parser {
             switch (token.type()) {
                 case LEFT_PARENTHESIS:
                 case LEFT_BRACE:
-                case LEFT_BRACKET: {
+                case LEFT_BRACKET:
+                case LEFT_ANGLE_BRACKET: {
                     TypedListASTNode childList = this.parseList(token.position(), token.type());
                     if (childList == null) {
                         return null;
@@ -63,6 +64,11 @@ public class Parser {
                     /* FALLTHROUGH: IF ERROR */
                 case RIGHT_BRACKET:
                     if (type == TokenType.LEFT_BRACKET) {
+                        break while_list;
+                    }
+                    /* FALLTHROUGH: IF ERROR */
+                case RIGHT_ANGLE_BRACKET:
+                    if (type == TokenType.LEFT_ANGLE_BRACKET) {
                         break while_list;
                     }
 

@@ -32,6 +32,10 @@ public class DebugASTNodeVisitor implements ASTNode.Visitor<String> {
                 start = '[';
                 end = ']';
                 break;
+            case LEFT_ANGLE_BRACKET:
+                start = '<';
+                end = '>';
+                break;
             default:
                 throw new IllegalStateException();
         }

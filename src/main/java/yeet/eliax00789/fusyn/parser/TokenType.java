@@ -7,5 +7,7 @@ public enum TokenType {
     RIGHT_BRACE,
     LEFT_BRACKET,
     RIGHT_BRACKET,
+    LEFT_ANGLE_BRACKET,
+    RIGHT_ANGLE_BRACKET,
     STRING,
 }

@@ -1,5 +1,0 @@
-------------------------------
-(var::set test something)
-(debug (var::get test))
-------------------------------
-something

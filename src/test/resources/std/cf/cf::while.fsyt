@@ -1,7 +1,7 @@
 ------------------------------
-(var::set while_var (bool::true))
-(cf::while {(var::get while_var)} {
-    (var::set while_var (bool::false))
+<while_var (bool::true)>
+(cf::while {<while_var>} {
+    <while_var (bool::false)>
     (debug test)
 })
 ------------------------------

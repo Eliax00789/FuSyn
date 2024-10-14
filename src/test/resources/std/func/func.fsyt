@@ -1,6 +1,6 @@
 ------------------------------
 (func::set debug-str [[String value]] Null {
-    (debug (var::get value))
+    (debug <value>)
 })
 (debug-str test)
 (func::call (func::get debug-str) [test])
