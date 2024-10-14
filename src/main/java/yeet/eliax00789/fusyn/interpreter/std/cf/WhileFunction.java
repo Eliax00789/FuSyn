@@ -20,6 +20,11 @@ public class WhileFunction implements Function {
     }
 
     @Override
+    public String getReturnType() {
+        return "Any";
+    }
+
+    @Override
     public Object execute(Interpreter interpreter, @NotNull List<?> arguments, int position, @NotNull List<Integer> argumentPositions) {
         TypedListASTNode conditionTypedListASTNode = (TypedListASTNode) arguments.getFirst();
         TypedListASTNode bodyTypedListASTNode = (TypedListASTNode) arguments.getLast();

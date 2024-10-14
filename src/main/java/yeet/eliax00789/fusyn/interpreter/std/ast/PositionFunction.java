@@ -20,6 +20,11 @@ public class PositionFunction implements Function {
     }
 
     @Override
+    public String getReturnType() {
+        return "Int";
+    }
+
+    @Override
     public Object execute(Interpreter interpreter, @NotNull List<?> arguments, int position, @NotNull List<Integer> argumentPositions) {
         return ((TypedListASTNode) arguments.getFirst()).position();
     }

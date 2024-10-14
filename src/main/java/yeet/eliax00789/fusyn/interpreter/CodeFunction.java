@@ -31,6 +31,11 @@ public class CodeFunction implements Function {
     }
 
     @Override
+    public String getReturnType() {
+        return this.returnType;
+    }
+
+    @Override
     public Object execute(Interpreter interpreter, @NotNull List<?> arguments, int position, @NotNull List<Integer> argumentPositions) {
         interpreter.interpreterContext().pushStack();
         for (int i = 0; i < arguments.size(); i++) {
@@ -38,11 +43,6 @@ public class CodeFunction implements Function {
         }
         Object ret = interpreter.exec(this.body);
         interpreter.interpreterContext().popStack();
-        String returnTypeName = interpreter.getNameFromClass(ret == null ? null : ret.getClass(), position);
-        if (!returnTypeName.equals(this.returnType)) {
-            interpreter.errorReporter().error(position, "Invalid return type " + returnTypeName + " expected " + this.returnType);
-            throw new Interpreter.InterpreterException();
-        }
         return ret;
     }
 }

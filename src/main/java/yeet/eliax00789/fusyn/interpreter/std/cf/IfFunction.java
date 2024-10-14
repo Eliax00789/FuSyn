@@ -20,6 +20,11 @@ public class IfFunction implements Function {
     }
 
     @Override
+    public String getReturnType() {
+        return "Any";
+    }
+
+    @Override
     public Object execute(Interpreter interpreter, @NotNull List<?> arguments, int position, @NotNull List<Integer> argumentPositions) {
         return (boolean) arguments.getFirst()
                 ? interpreter.exec((TypedListASTNode) arguments.getLast())

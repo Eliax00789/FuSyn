@@ -19,6 +19,11 @@ public class OrFunction implements Function {
     }
 
     @Override
+    public String getReturnType() {
+        return "Bool";
+    }
+
+    @Override
     public Object execute(Interpreter interpreter, @NotNull List<?> arguments, int position, @NotNull List<Integer> argumentPositions) {
         return (boolean) arguments.getFirst() || (boolean) arguments.getLast();
     }

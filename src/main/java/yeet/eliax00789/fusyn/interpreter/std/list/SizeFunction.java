@@ -19,6 +19,11 @@ public class SizeFunction implements Function {
     }
 
     @Override
+    public String getReturnType() {
+        return "Int";
+    }
+
+    @Override
     public Object execute(Interpreter interpreter, @NotNull List<?> arguments, int position, @NotNull List<Integer> argumentPositions) {
         return ((List<?>) arguments.getFirst()).size();
     }

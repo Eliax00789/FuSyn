@@ -15,7 +15,12 @@ public class GetFunction implements Function {
 
     @Override
     public List<String> getArgumentTypes() {
-        return List.of("List", "Integer");
+        return List.of("List", "Int");
+    }
+
+    @Override
+    public String getReturnType() {
+        return "Any";
     }
 
     @Override

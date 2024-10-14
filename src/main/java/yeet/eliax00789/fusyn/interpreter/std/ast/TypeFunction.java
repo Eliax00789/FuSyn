@@ -20,6 +20,11 @@ public class TypeFunction implements Function {
     }
 
     @Override
+    public String getReturnType() {
+        return "Str";
+    }
+
+    @Override
     public Object execute(Interpreter interpreter, @NotNull List<?> arguments, int position, @NotNull List<Integer> argumentPositions) {
         return switch (((TypedListASTNode) arguments.getFirst()).type) {
             case LEFT_PARENTHESIS -> "(";

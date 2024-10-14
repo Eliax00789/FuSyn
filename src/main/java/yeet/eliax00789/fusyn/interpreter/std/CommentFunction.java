@@ -19,6 +19,11 @@ public class CommentFunction implements Function {
     }
 
     @Override
+    public String getReturnType() {
+        return "Null";
+    }
+
+    @Override
     public Object execute(Interpreter interpreter, @NotNull List<?> arguments, int position, @NotNull List<Integer> argumentPositions) {
         return null;
     }

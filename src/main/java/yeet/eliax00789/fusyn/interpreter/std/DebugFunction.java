@@ -19,8 +19,14 @@ public class DebugFunction implements Function {
     }
 
     @Override
+    public String getReturnType() {
+        return "Any";
+    }
+
+    @Override
     public Object execute(Interpreter interpreter, @NotNull List<?> arguments, int position, @NotNull List<Integer> argumentPositions) {
-        interpreter.interpreterContext().output.println(arguments.getFirst().toString());
-        return null;
+        Object firstArgument = arguments.getFirst();
+        interpreter.interpreterContext().output.println(firstArgument.toString());
+        return firstArgument;
     }
 }

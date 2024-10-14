@@ -18,14 +18,19 @@ public class SetFunction implements Function {
 
     @Override
     public List<String> getArgumentTypes() {
-        return List.of("String", "List", "String", "AST");
+        return List.of("Str", "List", "Str", "AST");
+    }
+
+    @Override
+    public String getReturnType() {
+        return "Func";
     }
 
     @Override
     public Object execute(Interpreter interpreter, @NotNull List<?> arguments, int position, @NotNull List<Integer> argumentPositions) {
-        String name = (String) arguments.getFirst();
-        List<String> argumentTypes = new ArrayList<>();
-        List<String> argumentNames = new ArrayList<>();
+        String fName = (String) arguments.getFirst();
+        List<String> fArgumentTypes = new ArrayList<>();
+        List<String> fArgumentNames = new ArrayList<>();
         for (Object argument : (List<?>) arguments.get(1)) {
             if (!(argument instanceof List<?> argumentList)
                     || argumentList.size() != 2
@@ -34,12 +39,13 @@ public class SetFunction implements Function {
                 interpreter.errorReporter().error(argumentPositions.get(1), "Invalid arguments");
                 throw new Interpreter.InterpreterException();
             }
-            argumentTypes.add(argumentType);
-            argumentNames.add(argumentName);
+            fArgumentTypes.add(argumentType);
+            fArgumentNames.add(argumentName);
         }
         String fReturn = (String) arguments.get(2);
-        TypedListASTNode body = (TypedListASTNode) arguments.getLast();
-        interpreter.interpreterContext().setFunction(new CodeFunction(name, argumentTypes, argumentNames, fReturn, body));
-        return null;
+        TypedListASTNode fBody = (TypedListASTNode) arguments.getLast();
+        Function function = new CodeFunction(fName, fArgumentTypes, fArgumentNames, fReturn, fBody);
+        interpreter.interpreterContext().setFunction(function);
+        return function;
     }
 }

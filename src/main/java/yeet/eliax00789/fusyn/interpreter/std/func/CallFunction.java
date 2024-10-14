@@ -16,7 +16,12 @@ public class CallFunction implements Function {
 
     @Override
     public List<String> getArgumentTypes() {
-        return List.of("Function", "List");
+        return List.of("Func", "List");
+    }
+
+    @Override
+    public String getReturnType() {
+        return "Any";
     }
 
     @Override

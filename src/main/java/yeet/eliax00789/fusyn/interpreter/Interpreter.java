@@ -95,51 +95,61 @@ public record Interpreter(ErrorReporter errorReporter, InterpreterContext interp
 
         for (int i = 0; i < numArguments; i++) {
             int argumentPosition = argumentPositions.get(i);
+            Object argument = arguments.get(i);
             String argumentType = argumentTypes.get(i);
             Class<?> argumentTypeClass = this.getClassFromName(argumentType, argumentPosition);
-            assert argumentTypeClass != null;
-            Object argument = arguments.get(i);
-            if (!argumentTypeClass.isInstance(argument)) {
-                this.errorReporter.error(argumentPosition, "Invalid argument type " + this.getNameFromClass(argument == null ? null : argument.getClass(), argumentPosition) + " expected " + argumentType);
+            if (!argumentType.equals("Any")) {
+                if (!(argumentTypeClass == null ? argument == null : argumentTypeClass.isInstance(argument))) {
+                    this.errorReporter.error(argumentPosition, "Invalid argument type " + this.getNameFromClass(argument == null ? null : argument.getClass(), argumentPosition) + " expected " + argumentType);
+                    throw new InterpreterException();
+                }
+            }
+        }
+
+        Object ret = function.execute(this, arguments, position, argumentPositions);
+        String returnType = function.getReturnType();
+        if (!returnType.equals("Any")) {
+            Class<?> returnTypeClass = this.getClassFromName(returnType, position);
+            if (!(returnTypeClass == null ? ret == null : returnTypeClass.isInstance(ret))) {
+                this.errorReporter().error(position, "Invalid return type " + this.getNameFromClass(ret == null ? null : ret.getClass(), position) + " expected " + returnType);
                 throw new InterpreterException();
             }
         }
-        return function.execute(this, arguments, position, argumentPositions);
+        return ret;
     }
 
     public Class<?> getClassFromName(String name, int position) {
-        if (name.equals("String")) {
-            return String.class;
-        } else if (name.equals("List")) {
-            return List.class;
-        } else if (name.equals("Bool")) {
-            return Boolean.class;
-        } else if (name.equals("Function")) {
-            return Function.class;
-        } else if (name.equals("Any")) {
-            return Object.class;
-        } else if (name.equals("AST")) {
-            return TypedListASTNode.class;
-        } else if (name.equals("Null")) {
-            return null;
-        }
-        this.errorReporter.error(position, "Unknown Type");
-        throw new InterpreterException();
+        return switch (name) {
+            case "Str" -> String.class;
+            case "List" -> List.class;
+            case "Bool" -> Boolean.class;
+            case "Int" -> Integer.class;
+            case "Func" -> Function.class;
+            case "Any" -> Object.class;
+            case "AST" -> TypedListASTNode.class;
+            case "Null" -> null;
+            default -> {
+                this.errorReporter.error(position, "Unknown Type");
+                throw new InterpreterException();
+            }
+        };
     }
 
     public String getNameFromClass(Class<?> aClass, int position) {
         if (aClass == String.class) {
-            return "String";
+            return "Str";
         } else if (aClass == List.class) {
             return "List";
         } else if (aClass == Boolean.class) {
             return "Bool";
+        } else if (aClass == Integer.class) {
+            return "Int";
         } else if (aClass == Function.class) {
-            return "Function";
+            return "Func";
         } else if (aClass == Object.class) {
             return "Any";
         } else if (aClass == TypedListASTNode.class) {
-            return "TypedListASTNode";
+            return "AST";
         } else if (aClass == null) {
             return "Null";
         }

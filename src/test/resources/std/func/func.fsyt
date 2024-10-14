@@ -1,5 +1,5 @@
 ------------------------------
-(func::set debug-str [[String value]] Null {
+(func::set debug-str [[Str value]] Str {
     (debug <value>)
 })
 (debug-str test)

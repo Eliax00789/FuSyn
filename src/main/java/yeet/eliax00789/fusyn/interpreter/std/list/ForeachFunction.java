@@ -16,7 +16,12 @@ public class ForeachFunction implements Function {
 
     @Override
     public List<String> getArgumentTypes() {
-        return List.of("List", "String", "AST");
+        return List.of("List", "Str", "AST");
+    }
+
+    @Override
+    public String getReturnType() {
+        return "Any";
     }
 
     @Override

@@ -19,6 +19,11 @@ public class AddFunction implements Function {
     }
 
     @Override
+    public String getReturnType() {
+        return "List";
+    }
+
+    @Override
     public Object execute(Interpreter interpreter, @NotNull List<?> arguments, int position, @NotNull List<Integer> argumentPositions) {
         @SuppressWarnings("unchecked") List<Object> list = (List<Object>) arguments.getFirst();
         list.add(arguments.getLast());
