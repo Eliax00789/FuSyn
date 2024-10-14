@@ -1,0 +1,14 @@
+------------------------------
+(cf::if-else (bool::true) {
+    (debug (bool::true))
+} {
+    (debug (bool::false))
+})
+(cf::if-else (bool::false) {
+    (debug (bool::false))
+} {
+    (debug (bool::true))
+})
+------------------------------
+true
+true

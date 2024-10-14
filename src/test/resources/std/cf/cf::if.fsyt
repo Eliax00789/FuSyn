@@ -1,0 +1,9 @@
+------------------------------
+(cf::if (bool::true) {
+    (debug (bool::true))
+})
+(cf::if (bool::false) {
+    (debug (bool::false))
+})
+------------------------------
+true

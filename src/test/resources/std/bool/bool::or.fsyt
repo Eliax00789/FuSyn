@@ -1,0 +1,10 @@
+------------------------------
+(debug (bool::or (bool::false) (bool::false)))
+(debug (bool::or (bool::false) (bool::true)))
+(debug (bool::or (bool::true) (bool::false)))
+(debug (bool::or (bool::true) (bool::true)))
+------------------------------
+false
+true
+true
+true

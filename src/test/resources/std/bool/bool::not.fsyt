@@ -1,0 +1,6 @@
+------------------------------
+(debug (bool::not (bool::false)))
+(debug (bool::not (bool::true)))
+------------------------------
+true
+false

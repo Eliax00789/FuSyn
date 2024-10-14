@@ -1,0 +1,10 @@
+------------------------------
+(debug (bool::short-or (bool::false) {(bool::false)}))
+(debug (bool::short-or (bool::false) {(bool::true)}))
+(debug (bool::short-or (bool::true) {(bool::false)}))
+(debug (bool::short-or (bool::true) {(bool::true)}))
+------------------------------
+false
+true
+true
+true
