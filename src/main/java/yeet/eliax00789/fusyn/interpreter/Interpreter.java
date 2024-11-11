@@ -6,6 +6,8 @@ import yeet.eliax00789.fusyn.parser.type.ASTNode;
 import yeet.eliax00789.fusyn.parser.type.StringASTNode;
 import yeet.eliax00789.fusyn.parser.type.TypedListASTNode;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -145,6 +147,8 @@ public record Interpreter(ErrorReporter errorReporter, InterpreterContext interp
             case "Func" -> Function.class;
             case "Any" -> Object.class;
             case "AST" -> TypedListASTNode.class;
+            case "File" -> File.class;
+            case "Path" -> Path.class;
             case "Null" -> null;
             default -> {
                 this.errorReporter.error(position, "Unknown Type: " + name);
@@ -170,6 +174,10 @@ public record Interpreter(ErrorReporter errorReporter, InterpreterContext interp
             return "Any";
         } else if (aClass == TypedListASTNode.class) {
             return "AST";
+        } else if (aClass == File.class) {
+            return "File";
+        } else if (aClass == Path.class) {
+            return "Path";
         } else if (aClass == null) {
             return "Null";
         }

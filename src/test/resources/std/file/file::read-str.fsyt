@@ -1,0 +1,4 @@
+------------------------------
+(debug (file::read-str (file::from-path (path::from-str src/test/resources/test.txt))))
+------------------------------
+text
