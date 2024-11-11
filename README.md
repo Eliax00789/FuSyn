@@ -40,30 +40,49 @@ For more examples look into the [src/test/resources/std](src/test/resources/std)
 
 
 ## Available functions
-- `(ast::position AST) Int`
-- `(ast::type AST) Str`
-- `(bool::and Bool Bool) Bool`
-- `(bool::false) Bool`
-- `(bool::not Bool) Bool`
-- `(bool::or Bool Bool) Bool`
-- `(bool::short-and Bool AST) Bool`
-- `(bool::short-or Bool AST) Bool`
-- `(bool::true) Bool`
-- `(bool::xor Bool Bool) Bool`
-- `(c List) Null`
-- `(cf::if Bool AST) Any`
-- `(cf::if-else Bool AST AST) Any`
-- `(cf::while AST AST) Any`
-- `(debug Any) Any`
-- `(func::call Func List) Any`
-- `(func::get Str) Func`
-- `(func::set Str List Str AST) Func`
-- `(list::add List Any) List`
-- `(list::foreach List Str AST) Any`
-- `(list::get List Int) Any`
-- `(list::size List) Int`
-
-
+- `(debug [Any value]) Any`
+- `(if [Bool condition] [AST code]) Any`
+- `(if-else [Bool condition] [AST if_branch] [AST else_branch]) Any`
+- `(while [AST condition] [AST code]) Any`
+- ast
+  - `(ast::exec [AST ast]) Any`
+  - `(ast::position [AST ast]) Int`
+  - `(ast::type [AST ast]) Str`
+- bool
+  - `(bool::and [Bool a] [Bool b]) Bool`
+  - `(bool::false) Bool`
+  - `(bool::not [Bool value]) Bool`
+  - `(bool::or [Bool a] [Bool b]) Bool`
+  - `(bool::short-and [Bool a] [AST b_code]) Bool`
+  - `(bool::short-or [Bool a] [AST b_code]) Bool`
+  - `(bool::true) Bool`
+  - `(bool::xor [Bool a] [Bool b]) Bool`
+- file
+  - `(file::from-path [Path path]) File`
+  - `(file::read-str [File file]) Str`
+- func
+  - `(func::create [List args] [Str return_type] [AST code]) Func`
+- int
+  - `(int::add [Int a] [Int b]) Int`
+  - `(int::from-str [Str value]) Int`
+- iterable
+  - `(iterable::foreach [Iterable iterable] [Str variable] [AST code]) Any`
+- list
+  - `(list::add [List list] [Any value]) List`
+  - `(list::first [List list]) Any`
+  - `(list::get [List list] [Int index]) Any`
+  - `(list::last [List list]) Any`
+  - `(list::size [List list]) Int`
+- path
+  - `(path::from-str [Str path]) Path`
+- regex
+  - `(regex::from-str [Str value]) Regex`
+  - `(regex::match [Str value] [Regex regex]) List`
+  - `(regex::split [Str value] [Regex regex]) List`
+- str
+  - `(str::concat [Str a] [Str b]) Str`
+  - `(str::eq [Str a] [Str b]) Bool`
+  - `(str::from-int [Int value]) Str`
 ## CLI Arguments
 - Run a file: `-f <file>`
 - Repl (may not work correctly): `-i`
