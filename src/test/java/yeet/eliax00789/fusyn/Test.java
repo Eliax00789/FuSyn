@@ -65,7 +65,7 @@ public class Test {
             interpreterOutput.output = "";
         }
 
-        System.out.println("Testing complete (" + numTests + "/" + numCorrectTests + ")");
+        System.out.println("Testing complete (" + numCorrectTests + "/" + numTests + ")");
     }
 
     private static void readTestFilesFromResources(Map<String, String> result, ClassLoader classLoader, String directory) throws IOException {
