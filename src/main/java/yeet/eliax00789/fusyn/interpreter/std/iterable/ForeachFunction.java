@@ -1,4 +1,4 @@
-package yeet.eliax00789.fusyn.interpreter.std.list;
+package yeet.eliax00789.fusyn.interpreter.std.iterable;
 
 import org.jetbrains.annotations.NotNull;
 import yeet.eliax00789.fusyn.interpreter.Function;
@@ -11,12 +11,13 @@ import java.util.List;
 public class ForeachFunction implements Function {
     @Override
     public String getName() {
-        return "list::foreach";
+        return "iterable::foreach";
     }
 
     @Override
     public List<String> getArgumentTypes() {
         return List.of("List", "Str", "AST");
+        return List.of("Iterable", "Str", "AST");
     }
 
     @Override

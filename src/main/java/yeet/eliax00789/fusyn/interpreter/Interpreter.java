@@ -135,6 +135,7 @@ public record Interpreter(ErrorReporter errorReporter, InterpreterContext interp
         return switch (name) {
             case "Str" -> String.class;
             case "List" -> List.class;
+            case "Iterable" -> Iterable.class;
             case "Bool" -> Boolean.class;
             case "Int" -> Integer.class;
             case "Func" -> Function.class;
@@ -153,6 +154,8 @@ public record Interpreter(ErrorReporter errorReporter, InterpreterContext interp
             return "Str";
         } else if (aClass == List.class) {
             return "List";
+        } else if (aClass == Iterable.class) {
+            return "Iterable";
         } else if (aClass == Boolean.class) {
             return "Bool";
         } else if (aClass == Integer.class) {
