@@ -1,0 +1,7 @@
+------------------------------
+<debug-str-wrapper (func::create [[Str value]] Str {
+    (debug <value>)
+})>
+(debug-str-wrapper test)
+------------------------------
+test

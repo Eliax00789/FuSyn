@@ -1,14 +1,14 @@
 package yeet.eliax00789.fusyn.interpreter.std.bool;
 
 import org.jetbrains.annotations.NotNull;
-import yeet.eliax00789.fusyn.interpreter.Function;
 import yeet.eliax00789.fusyn.interpreter.Interpreter;
+import yeet.eliax00789.fusyn.interpreter.NativeFunction;
 import yeet.eliax00789.fusyn.parser.type.TypedListASTNode;
 
 import java.util.List;
 
 @SuppressWarnings("unused")
-public class ShortOrFunction implements Function {
+public class ShortOrFunction implements NativeFunction {
     @Override
     public String getName() {
         return "bool::short-or";
@@ -17,6 +17,11 @@ public class ShortOrFunction implements Function {
     @Override
     public List<String> getArgumentTypes() {
         return List.of("Bool", "AST");
+    }
+
+    @Override
+    public List<String> getArgumentNames() {
+        return List.of("a", "b_code");
     }
 
     @Override

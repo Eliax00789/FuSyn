@@ -6,14 +6,12 @@ import yeet.eliax00789.fusyn.parser.type.TypedListASTNode;
 import java.util.List;
 
 public class CodeFunction implements Function {
-    private final String name;
     private final List<String> argumentTypes;
     private final List<String> argumentNames;
     private final String returnType;
     private final TypedListASTNode body;
 
-    public CodeFunction(String name, List<String> argumentTypes, List<String> argumentNames, String returnType, TypedListASTNode body) {
-        this.name = name;
+    public CodeFunction(List<String> argumentTypes, List<String> argumentNames, String returnType, TypedListASTNode body) {
         this.argumentTypes = argumentTypes;
         this.argumentNames = argumentNames;
         this.returnType = returnType;
@@ -21,13 +19,13 @@ public class CodeFunction implements Function {
     }
 
     @Override
-    public String getName() {
-        return this.name;
+    public List<String> getArgumentTypes() {
+        return this.argumentTypes;
     }
 
     @Override
-    public List<String> getArgumentTypes() {
-        return this.argumentTypes;
+    public List<String> getArgumentNames() {
+        return this.argumentNames;
     }
 
     @Override

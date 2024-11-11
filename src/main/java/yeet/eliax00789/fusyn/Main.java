@@ -2,9 +2,9 @@ package yeet.eliax00789.fusyn;
 
 import yeet.eliax00789.fusyn.error.ConsoleErrorReporter;
 import yeet.eliax00789.fusyn.error.ErrorReporter;
-import yeet.eliax00789.fusyn.interpreter.Function;
 import yeet.eliax00789.fusyn.interpreter.Interpreter;
 import yeet.eliax00789.fusyn.interpreter.InterpreterContext;
+import yeet.eliax00789.fusyn.interpreter.NativeFunction;
 import yeet.eliax00789.fusyn.interpreter.output.ConsoleInterpreterOutput;
 import yeet.eliax00789.fusyn.interpreter.output.InterpreterOutput;
 import yeet.eliax00789.fusyn.parser.Parser;
@@ -91,7 +91,7 @@ public class Main {
         Main.findAllClassesUsingClassLoader(functionClasses, "yeet.eliax00789.fusyn.interpreter.std");
         for (Class<?> aClass : functionClasses) {
             try {
-                Function function = (Function) aClass.getDeclaredConstructor().newInstance();
+                NativeFunction function = (NativeFunction) aClass.getDeclaredConstructor().newInstance();
                 interpreterContext.setVariable(function.getName(), function);
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                 throw new RuntimeException(e);

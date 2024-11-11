@@ -1,14 +1,14 @@
 package yeet.eliax00789.fusyn.interpreter.std;
 
 import org.jetbrains.annotations.NotNull;
-import yeet.eliax00789.fusyn.interpreter.Function;
 import yeet.eliax00789.fusyn.interpreter.Interpreter;
+import yeet.eliax00789.fusyn.interpreter.NativeFunction;
 import yeet.eliax00789.fusyn.parser.type.TypedListASTNode;
 
 import java.util.List;
 
 @SuppressWarnings("unused")
-public class WhileFunction implements Function {
+public class WhileFunction implements NativeFunction {
     @Override
     public String getName() {
         return "while";
@@ -17,6 +17,11 @@ public class WhileFunction implements Function {
     @Override
     public List<String> getArgumentTypes() {
         return List.of("AST", "AST");
+    }
+
+    @Override
+    public List<String> getArgumentNames() {
+        return List.of("condition", "code");
     }
 
     @Override

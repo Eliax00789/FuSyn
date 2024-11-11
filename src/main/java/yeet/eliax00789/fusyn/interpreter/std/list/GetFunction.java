@@ -1,13 +1,13 @@
 package yeet.eliax00789.fusyn.interpreter.std.list;
 
 import org.jetbrains.annotations.NotNull;
-import yeet.eliax00789.fusyn.interpreter.Function;
 import yeet.eliax00789.fusyn.interpreter.Interpreter;
+import yeet.eliax00789.fusyn.interpreter.NativeFunction;
 
 import java.util.List;
 
 @SuppressWarnings("unused")
-public class GetFunction implements Function {
+public class GetFunction implements NativeFunction {
     @Override
     public String getName() {
         return "list::get";
@@ -16,6 +16,11 @@ public class GetFunction implements Function {
     @Override
     public List<String> getArgumentTypes() {
         return List.of("List", "Int");
+    }
+
+    @Override
+    public List<String> getArgumentNames() {
+        return List.of("list", "index");
     }
 
     @Override

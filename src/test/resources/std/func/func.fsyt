@@ -1,9 +1,0 @@
-------------------------------
-(func::set debug-str [[Str value]] Str {
-    (debug <value>)
-})
-(debug-str test)
-(func::call (func::get debug-str) [test])
-------------------------------
-test
-test

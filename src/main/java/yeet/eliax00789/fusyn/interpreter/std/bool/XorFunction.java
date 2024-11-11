@@ -1,13 +1,13 @@
 package yeet.eliax00789.fusyn.interpreter.std.bool;
 
 import org.jetbrains.annotations.NotNull;
-import yeet.eliax00789.fusyn.interpreter.Function;
 import yeet.eliax00789.fusyn.interpreter.Interpreter;
+import yeet.eliax00789.fusyn.interpreter.NativeFunction;
 
 import java.util.List;
 
 @SuppressWarnings("unused")
-public class XorFunction implements Function {
+public class XorFunction implements NativeFunction {
     @Override
     public String getName() {
         return "bool::xor";
@@ -16,6 +16,11 @@ public class XorFunction implements Function {
     @Override
     public List<String> getArgumentTypes() {
         return List.of("Bool", "Bool");
+    }
+
+    @Override
+    public List<String> getArgumentNames() {
+        return List.of("a", "b");
     }
 
     @Override

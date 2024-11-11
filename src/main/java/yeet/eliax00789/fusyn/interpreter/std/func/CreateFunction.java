@@ -2,23 +2,28 @@ package yeet.eliax00789.fusyn.interpreter.std.func;
 
 import org.jetbrains.annotations.NotNull;
 import yeet.eliax00789.fusyn.interpreter.CodeFunction;
-import yeet.eliax00789.fusyn.interpreter.Function;
 import yeet.eliax00789.fusyn.interpreter.Interpreter;
+import yeet.eliax00789.fusyn.interpreter.NativeFunction;
 import yeet.eliax00789.fusyn.parser.type.TypedListASTNode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unused")
-public class SetFunction implements Function {
+public class CreateFunction implements NativeFunction {
     @Override
     public String getName() {
-        return "func::set";
+        return "func::create";
     }
 
     @Override
     public List<String> getArgumentTypes() {
-        return List.of("Str", "List", "Str", "AST");
+        return List.of("List", "Str", "AST");
+    }
+
+    @Override
+    public List<String> getArgumentNames() {
+        return List.of("args", "return_type", "code");
     }
 
     @Override
@@ -28,24 +33,21 @@ public class SetFunction implements Function {
 
     @Override
     public Object execute(Interpreter interpreter, @NotNull List<?> arguments, int position, @NotNull List<Integer> argumentPositions) {
-        String fName = (String) arguments.getFirst();
         List<String> fArgumentTypes = new ArrayList<>();
         List<String> fArgumentNames = new ArrayList<>();
-        for (Object argument : (List<?>) arguments.get(1)) {
+        for (Object argument : (List<?>) arguments.getFirst()) {
             if (!(argument instanceof List<?> argumentList)
                     || argumentList.size() != 2
                     || !(argumentList.getFirst() instanceof String argumentType)
                     || !(argumentList.getLast() instanceof String argumentName)) {
-                interpreter.errorReporter().error(argumentPositions.get(1), "Invalid arguments");
+                interpreter.errorReporter().error(argumentPositions.getFirst(), "Invalid arguments");
                 throw new Interpreter.InterpreterException();
             }
             fArgumentTypes.add(argumentType);
             fArgumentNames.add(argumentName);
         }
-        String fReturn = (String) arguments.get(2);
+        String fReturn = (String) arguments.get(1);
         TypedListASTNode fBody = (TypedListASTNode) arguments.getLast();
-        Function function = new CodeFunction(fName, fArgumentTypes, fArgumentNames, fReturn, fBody);
-        interpreter.interpreterContext().setFunction(function);
-        return function;
+        return new CodeFunction(fArgumentTypes, fArgumentNames, fReturn, fBody);
     }
 }
