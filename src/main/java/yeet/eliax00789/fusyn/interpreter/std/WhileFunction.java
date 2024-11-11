@@ -1,4 +1,4 @@
-package yeet.eliax00789.fusyn.interpreter.std.cf;
+package yeet.eliax00789.fusyn.interpreter.std;
 
 import org.jetbrains.annotations.NotNull;
 import yeet.eliax00789.fusyn.interpreter.Function;
@@ -11,7 +11,7 @@ import java.util.List;
 public class WhileFunction implements Function {
     @Override
     public String getName() {
-        return "cf::while";
+        return "while";
     }
 
     @Override

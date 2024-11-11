@@ -1,6 +1,6 @@
 ------------------------------
 <while_var (bool::true)>
-(cf::while {<while_var>} {
+(while {<while_var>} {
     <while_var (bool::false)>
     (debug test)
 })
