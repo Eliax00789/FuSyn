@@ -20,7 +20,16 @@ public record Interpreter(ErrorReporter errorReporter, InterpreterContext interp
 
     @Override
     public Object visit(StringASTNode stringASTNode) {
-        return stringASTNode.value();
+        String value = stringASTNode.value();
+        try {
+            return Integer.parseInt(value);
+        } catch (NumberFormatException _) {
+            try {
+                return Double.parseDouble(value);
+            } catch (NumberFormatException _) {
+                return value;
+            }
+        }
     }
 
     @Override
