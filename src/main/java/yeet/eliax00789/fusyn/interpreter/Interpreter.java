@@ -52,11 +52,11 @@ public record Interpreter(ErrorReporter errorReporter, InterpreterContext interp
                     throw new InterpreterException();
                 }
                 int argumentsSize = typedListASTNode.size() - 1;
-                List<Object> arguments = new ArrayList<>(argumentsSize);
+                List<ASTNode> arguments = new ArrayList<>(argumentsSize);
                 List<Integer> argumentPositions = new ArrayList<>(argumentsSize);
                 for (int i = 0; i < argumentsSize; i++) {
                     ASTNode node = typedListASTNode.get(i + 1);
-                    arguments.add(node.accept(this));
+                    arguments.add(node);
                     argumentPositions.add(node.position());
                 }
                 yield this.exec(function, arguments, typedListASTNode.position(), argumentPositions);
@@ -97,7 +97,7 @@ public record Interpreter(ErrorReporter errorReporter, InterpreterContext interp
         };
     }
 
-    public Object exec(Function function, List<?> arguments, int position, List<Integer> argumentPositions) {
+    public Object exec(Function function, List<ASTNode> arguments, int position, List<Integer> argumentPositions) {
         int numArguments = arguments.size();
         List<String> argumentTypes = function.getArgumentTypes();
 
@@ -106,20 +106,24 @@ public record Interpreter(ErrorReporter errorReporter, InterpreterContext interp
             throw new InterpreterException();
         }
 
+        List<Object> argumentValues = new ArrayList<>(numArguments);
+
         for (int i = 0; i < numArguments; i++) {
             int argumentPosition = argumentPositions.get(i);
-            Object argument = arguments.get(i);
             String argumentType = argumentTypes.get(i);
             Class<?> argumentTypeClass = this.getClassFromName(argumentType, argumentPosition);
+            ASTNode argument = arguments.get(i);
+            Object argumentValue = argumentType.equals("AST") ? argument : argument.accept(this);
             if (!argumentType.equals("Any")) {
-                if (!(argumentTypeClass == null ? argument == null : argumentTypeClass.isInstance(argument))) {
-                    this.errorReporter.error(argumentPosition, "Invalid argument type " + this.getNameFromClass(argument == null ? null : argument.getClass(), argumentPosition) + " expected " + argumentType);
+                if (!(argumentTypeClass == null ? argumentValue == null : argumentTypeClass.isInstance(argumentValue))) {
+                    this.errorReporter.error(argumentPosition, "Invalid argument type " + this.getNameFromClass(argumentValue == null ? null : argumentValue.getClass(), argumentPosition) + " expected " + argumentType);
                     throw new InterpreterException();
                 }
             }
+            argumentValues.add(argumentValue);
         }
 
-        Object ret = function.execute(this, arguments, position, argumentPositions);
+        Object ret = function.execute(this, argumentValues, position, argumentPositions);
         String returnType = function.getReturnType();
         if (!returnType.equals("Any")) {
             Class<?> returnTypeClass = this.getClassFromName(returnType, position);
