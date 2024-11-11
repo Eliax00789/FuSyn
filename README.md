@@ -32,7 +32,6 @@ List Types:
 
 ## Example Code
 ```
-
 (iterable::foreach [a b c d] letter {
     (debug <letter>)
 })
