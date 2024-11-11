@@ -147,7 +147,7 @@ public record Interpreter(ErrorReporter errorReporter, InterpreterContext interp
             case "AST" -> TypedListASTNode.class;
             case "Null" -> null;
             default -> {
-                this.errorReporter.error(position, "Unknown Type");
+                this.errorReporter.error(position, "Unknown Type: " + name);
                 throw new InterpreterException();
             }
         };
@@ -173,7 +173,7 @@ public record Interpreter(ErrorReporter errorReporter, InterpreterContext interp
         } else if (aClass == null) {
             return "Null";
         }
-        this.errorReporter.error(position, "Unknown Type");
+        this.errorReporter.error(position, "Unknown Type: " + aClass);
         throw new InterpreterException();
     }
 
