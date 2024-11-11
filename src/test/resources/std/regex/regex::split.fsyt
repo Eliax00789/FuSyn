@@ -1,0 +1,4 @@
+------------------------------
+(debug (regex::split test1234test (regex::from-str /\\d+/)))
+------------------------------
+[test, test]

@@ -10,6 +10,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public record Interpreter(ErrorReporter errorReporter, InterpreterContext interpreterContext) implements ASTNode.Visitor<Object> {
     public static class InterpreterException extends RuntimeException {
@@ -149,6 +150,7 @@ public record Interpreter(ErrorReporter errorReporter, InterpreterContext interp
             case "AST" -> TypedListASTNode.class;
             case "File" -> File.class;
             case "Path" -> Path.class;
+            case "Regex" -> Pattern.class;
             case "Null" -> null;
             default -> {
                 this.errorReporter.error(position, "Unknown Type: " + name);
@@ -178,6 +180,8 @@ public record Interpreter(ErrorReporter errorReporter, InterpreterContext interp
             return "File";
         } else if (aClass == Path.class) {
             return "Path";
+        } else if (aClass == Pattern.class) {
+            return "Regex";
         } else if (aClass == null) {
             return "Null";
         }
