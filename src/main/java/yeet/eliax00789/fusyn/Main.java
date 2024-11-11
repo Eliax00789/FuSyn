@@ -94,7 +94,8 @@ public class Main {
         Main.findAllClassesUsingClassLoader(functionClasses, "yeet.eliax00789.fusyn.interpreter.std");
         for (Class<?> aClass : functionClasses) {
             try {
-                interpreterContext.setFunction((Function) aClass.getDeclaredConstructor().newInstance());
+                Function function = (Function) aClass.getDeclaredConstructor().newInstance();
+                interpreterContext.setVariable(function.getName(), function);
             } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }

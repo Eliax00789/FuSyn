@@ -42,9 +42,13 @@ public record Interpreter(ErrorReporter errorReporter, InterpreterContext interp
                     this.errorReporter.error(typedListASTNode.position(), "Exec invalid");
                     throw new InterpreterException();
                 }
-                Function function = this.interpreterContext.getFunction(firstValueStr);
-                if (function == null) {
+                Object variable = this.interpreterContext.getVariable(firstValueStr);
+                if (variable == null) {
                     this.errorReporter.error(typedListASTNode.position(), "Exec function not found");
+                    throw new InterpreterException();
+                }
+                if (!(variable instanceof Function function)) {
+                    this.errorReporter.error(typedListASTNode.position(), "Cant execute " + this.getNameFromClass(variable.getClass(), typedListASTNode.position()));
                     throw new InterpreterException();
                 }
                 int argumentsSize = typedListASTNode.size() - 1;
