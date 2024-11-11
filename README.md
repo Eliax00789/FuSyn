@@ -21,7 +21,8 @@ List Types:
   - Returns all the given values as a list
 - `{}`: AST
   - Syntax: `{anything}`
-  - Returns itself - May be replaced by a simple list in the future
+  - Returns its own code without evaluating any values inside
+  - If executed: returns the last value returned by an inner list
 - `<>`: Var
   - Syntax:
     - Get: `<var-name>`
