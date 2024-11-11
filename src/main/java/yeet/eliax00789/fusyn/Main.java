@@ -13,11 +13,11 @@ import yeet.eliax00789.fusyn.parser.type.TypedListASTNode;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -65,10 +65,7 @@ public class Main {
     }
 
     private static void runFile(File file) throws IOException {
-        String source;
-        try (FileInputStream reader = new FileInputStream(file)) {
-            source = new String(reader.readAllBytes());
-        }
+        String source = Files.readString(file.toPath());
 
         ErrorReporter errorReporter = new ConsoleErrorReporter();
         errorReporter.setSource(source);
